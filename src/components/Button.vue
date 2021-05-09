@@ -1,5 +1,6 @@
 <template>
-    <button :style="{background:color}" class="btn">{{ text }}</button>
+    <button @click="onclick()" :style="{background:color}" 
+    class="btn">{{ text }}</button>
 </template>
 
 
@@ -10,5 +11,11 @@ export default {
         text: String,
         color: String,
     }
+,
+methods: {
+    onclick(){
+        console.log("you clicked me");
+    },
+},
 }
 </script>
