@@ -1,21 +1,25 @@
 <template>
   <div class="container">
     <Header title="ToDoTask"/>
+    <Tasks :tasks="tasks" />
   </div>
 </template>
 
 <script>
-import Header from "./components/Header";
+import Header from "./components/Header"
+import Tasks from './components/Tasks'
+
 
 export default {
   name: "App",
   components: {
-    Header
+    Header,
+    Tasks,
   },
   data() {
     return {
-      tasks: []
-    };
+      tasks: [],
+    }
   },
   created() {
     this.tasks = [
@@ -36,8 +40,8 @@ export default {
         text: "Food Shopping",
         day: "March 3rd at 11:00am",
         reminder: false
-      }
-    ];
+      },
+    ]
   }
 };
 </script>
