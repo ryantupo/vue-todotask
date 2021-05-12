@@ -14,7 +14,7 @@ export default {
 ,
 methods: {
     onclick(){
-        this.$emit('toggle-add-task')
+        this.$emit('btn-click')
     },
 },
 }
