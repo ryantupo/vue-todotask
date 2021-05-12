@@ -14,8 +14,12 @@ export default {
 ,
 methods: {
     onclick(){
-        console.log("you clicked me");
+        this.$emit('toggle-add-task')
     },
 },
 }
 </script>
+
+<style>
+
+</style>
