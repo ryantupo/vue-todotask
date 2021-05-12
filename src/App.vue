@@ -1,29 +1,35 @@
 <template>
   <div class="container">
     <Header title="ToDoTask"/>
-    <Tasks @delete-task="deleteTask" :tasks="tasks" />
+    <Tasks 
+    @toggle-reminder="toggleReminder" 
+    @delete-task="deleteTask" :tasks="tasks" />
   </div>
 </template>
 
 <script>
-import Header from "./components/Header"
-import Tasks from './components/Tasks'
-
+import Header from "./components/Header";
+import Tasks from "./components/Tasks";
 
 export default {
   name: "App",
   components: {
     Header,
-    Tasks,
+    Tasks
   },
   data() {
     return {
-      tasks: [],
-    }
+      tasks: []
+    };
   },
   methods: {
-    deleteTask(id){
-      console.log('Task',id)
+    deleteTask(id) {
+      if (confirm("are you sure?")) {
+        this.tasks = this.tasks.filter(task => task.id !== id);
+      }
+    },
+    toggleReminder(id){
+      this.tasks = this.tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task)
     }
   },
   created() {
@@ -45,8 +51,8 @@ export default {
         text: "Food Shopping",
         day: "March 3rd at 11:00am",
         reminder: false
-      },
-    ]
+      }
+    ];
   }
 };
 </script>
