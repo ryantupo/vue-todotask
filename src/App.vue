@@ -11,6 +11,10 @@
     @toggle-reminder="toggleReminder" 
     @delete-task="deleteTask" 
     :tasks="tasks" />
+
+    <router-view></router-view>
+
+    <Footer />
   </div>
 </template>
 
@@ -18,11 +22,13 @@
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
+import Footer from './components/Footer'
 
 export default {
   name: "App",
   components: {
     Header,
+    Footer,
     Tasks,
     AddTask
   },
@@ -37,58 +43,42 @@ export default {
       this.showAddTask = !this.showAddTask;
     },
     async addTask(task) {
-
-
       const res = await fetch("api/tasks", {
         method: "POST",
         headers: {
           "Content-type": "application/json"
         },
-        body: JSON.stringify(task),
+        body: JSON.stringify(task)
       });
 
       const data = await res.json();
 
       this.tasks = [...this.tasks, data];
-    
-    
-    
-    
-    
     },
     async deleteTask(id) {
       if (confirm("are you sure?")) {
+        const res = await fetch(`api/tasks/${id}`, {
+          method: "DELETE"
+        });
 
-        const res = await fetch(`api/tasks/${id}`,{
-          method: 'DELETE',
-        })
-
-        res.status === 200 ? (this.tasks = this.tasks.filter(
-          (task) => task.id !== id)) 
-        : alert('Error deleteing task')
-
-
-
-
-        
+        res.status === 200
+          ? (this.tasks = this.tasks.filter(task => task.id !== id))
+          : alert("Error deleteing task");
       }
     },
     async toggleReminder(id) {
+      const taskToToggle = await this.fetchTask(id);
+      const updTask = { ...taskToToggle, reminder: !taskToToggle.reminder };
 
-      const taskToToggle = await this.fetchTask(id)
-      const updTask = {...taskToToggle, reminder:!taskToToggle.reminder}
-
-      const res = await fetch(`api/tasks/${id}`,{
-        method: 'PUT',
+      const res = await fetch(`api/tasks/${id}`, {
+        method: "PUT",
         headers: {
-          'Content-type': 'application/json'
+          "Content-type": "application/json"
         },
-        body: JSON.stringify(updTask),
-      })
+        body: JSON.stringify(updTask)
+      });
 
-
-      const data = await res.json()
-
+      const data = await res.json();
 
       this.tasks = this.tasks.map(
         task => (task.id === id ? { ...task, reminder: data.reminder } : task)
