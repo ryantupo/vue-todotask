@@ -1,9 +1,6 @@
 <template>
   <div class="container">
     <Header @toggle-add-task="toggleAddTask" title="ToDoTask" :showAddTask="showAddTask"/>
-
-   
-
     <router-view :showAddTask="showAddTask"></router-view>
 
     <Footer />
