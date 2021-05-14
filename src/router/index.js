@@ -1,8 +1,16 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {
+  createRouter,
+  createWebHistory
+} from 'vue-router'
 
 import About from '../views/About'
+import Home from '../views/Home'
 
-const routes = [
+const routes = [{
+    path: '/',
+    name: 'Home',
+    component: Home,
+  },
 
   {
     path: '/About',
@@ -13,7 +21,8 @@ const routes = [
 
 // eslint-disable-next-line no-unused-vars
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    routes,
-  })
+  history: createWebHistory(process.env.BASE_URL),
+  routes,
+})
 
+export default router
